@@ -9,11 +9,6 @@
 #ifndef structs_h
 #define structs_h
 #include "commonFunctions.h"
-struct saveStudent {
-    char	name[maxLength];
-    int		grade;
-	int 	idCard;
-};
 
 typedef struct node {
     char name[maxLength];
