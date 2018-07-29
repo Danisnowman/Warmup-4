@@ -11,9 +11,9 @@
 #include <string.h>
 #include "commonFunctions.h"
 #include "structs.h"
+#include "nodeFunctions.h"
 
 bool done;					// Used to loop through the main menu until switch option 4 is selected
-bool noMatch = true;				//
 int  gradeInput;				// Receives the grade input from the user
 int  IdCardInput;				// Receives the ID input from the user
 int counter;					// Used to know the quantity of students
@@ -22,34 +22,6 @@ char nameInput[maxLength];			// Used to receive the raw char input
 char nameInputAsString[maxLength];		// Used to reviece the properly formatted string
 struct node student;				// Iitializes the node 'student' which itself is the object inside a list that represents each student
 
-
-void print_list(node_t * head) {		// Function used to iterate over a list
-	node_t * current = head;		// Defines head as the first node
-	while (current != NULL) {		// While the current node is not empty, it will print its value
-		printf("\nStudent's name: %s\n", current->name);
-		printf("Students's grade: %d\n", current->grade);
-		printf("Student's ID: %d\n", current->idCard);
-		current = current->next;	// Moves unto the next node
-	}
-}
-
-void push(node_t * head, char nameInput[maxLength], int gradeInput, int idCardInput) {
-	node_t * current = head;		// Defines head as the first node
-	while (current->next != NULL) { // Checks if it is on the last node
-		current = current->next;	// Moves to the last node to then
-	}
-	if (head->idCard == 0) {		// Checks if idCard is 0 to see if node head is empty. a student can have 0 on a grade but not on idCard
-		strcpy(head->name, nameInput);
-		head->grade = gradeInput;
-		head->idCard = idCardInput;
-	}else{					// If head is not empty, it moves to the nex node
-			current->next = malloc(sizeof(node_t));
-			strcpy(current->next->name, nameInput);
-			current->next->grade = gradeInput;
-			current->next->idCard = idCardInput;
-			current->next->next = NULL;
-	}
-}
 
 int main(int argc, const char * argv[]) {
 	while(!done){
@@ -70,26 +42,18 @@ int main(int argc, const char * argv[]) {
 				
 			case 2:
 				if (counter)
-				print_list(&student);
+				printList(&student);
 				else if (!counter)
 					printf("\nNo students yet. Please select option 1 in the main menu\nReturning...");
 				break;
 				
 			case 3:
 				IdCardInput = askInt("\nPlease enter student's ID. \nID: ", 200000000);		// asks the user for the ID number
-				/*for (int i = 0; i < maxStudents; i++) {
-					if (id == student[i].idCard) {						// checks if there's an existing id that matches the input
-						printf("\nFound who you are searching for. \nStudent: %s\n", student[i].name);
-						noMatch = false;
-					}
-				}
-				if (noMatch)
-					printf("\nNo match found. Returning...");
+				searchId(&student, IdCardInput);
 				break;
-				*/
 			case 4:
 				done = true;					// exits the main menu and thus, ends the program
-				 break;
+				break;
 		}
 	}
 	
