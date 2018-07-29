@@ -39,12 +39,12 @@ void searchId(node_t * head, int idCardInput) {        // Function used to itera
         if (current->idCard == idCardInput){
             printf("Student: %s", current->name);
             noMatch = false;
-        }
-        current = current->next;    // Moves unto the next node
-        if (noMatch){
+        }else if (noMatch){
             printf("\nNo match found. Returning...");
             noMatch = false;
         }
+        noMatch = true;
+        current = current->next;    // Moves unto the next node
     }
     
 }
